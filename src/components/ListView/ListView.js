@@ -1,11 +1,14 @@
-import { todos } from '../../__mock-data';
-import { formatDate } from '../../utils/helpers';
+// import { todos } from '../../__mock-data';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { TodoDataContext } from '../../context/TodoDataContext';
+
+import { formatDate } from '../../utils/helpers';
 import { StyledListView } from './StyledListView';
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
+import Button from '../shared/Button';
 import {
   Bell,
   Star,
@@ -26,15 +29,18 @@ const StyledListHeader = styled.div`
   align-items: center;
 
   > h3 {
-    display: inline;
+    /* display: inline; */
     margin: 0;
   }
 
-  svg {
-    margin-left: 1rem;
-    cursor: pointer;
+  > span {
+    display: flex;
+    flex-flow: row nowrap;
   }
 `;
+
+// TODO - merge above to HeaderBar / menu
+//   with TodoViewHeader 
 
 const StyledListItem = styled.div`
   border-bottom: 1px solid var(--layout-border);
@@ -74,13 +80,21 @@ const StyledListItemContent = styled.div`
 `;
 
 const ListView = () => {
+  const todos = useContext(TodoDataContext);
+
+  console.log(todos);
+
   return (
     <StyledListView>
       <StyledListHeader>
         <h3>DESIGN</h3>
         <span>
-          <ArrowDownUp />
-          <ThreeDotsVertical />
+          <Button iconSize='1.2rem' position='right'>
+            <ArrowDownUp />
+          </Button>
+          <Button iconSize='1.2rem' position='right'>
+            <ThreeDotsVertical />
+          </Button>
         </span>
       </StyledListHeader>
       <div>

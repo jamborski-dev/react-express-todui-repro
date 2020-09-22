@@ -47,6 +47,10 @@ const GlobalStyles = createGlobalStyle`
       list-style: none;
     }
   }
+
+  button:focus {
+    outline: 1px dotted rgba(0,0,0,0.2);
+  }
 `;
 
 export default GlobalStyles;

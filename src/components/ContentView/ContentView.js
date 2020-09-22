@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { StyledContentView } from './StyledContentView';
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
+import Button from '../shared/Button';
 import {
   Stopwatch,
   ThreeDotsVertical,
@@ -25,7 +26,7 @@ const TodoView = styled.div`
 
   display: grid;
   grid-template-columns: 50px auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto minmax(70px, auto);
   grid-template-areas:
     'aside content'
     '. footer';
@@ -38,25 +39,21 @@ const TodoViewHeader = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  align-items: center;
+  margin-bottom: 1rem;
 
-  > div {
-    width: 70%;
-  }
-
-  > div > h1 {
+  > h1 {
     font-size: 1.5rem;
     margin: 0;
-    margin-bottom: 1rem;
   }
-
-  > span > svg {
-    width: 18px;
-    height: 18px;
-    margin-left: 2rem;
+  > span {
+    display: flex;
+    flex-flow: row nowrap;
   }
 `;
+
 const TodoViewContent = styled.div`
+  margin-top: 2rem;
   margin-bottom: 3rem;
 `;
 const TodoViewFooter = styled.div`
@@ -100,23 +97,33 @@ const AddNotesContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  height: 100%;
+  height: calc(100% - 2rem);
 
   border-radius: 5px 5px 0 0;
   background: #edf4ff;
-  padding: 1rem 2rem;
   color: #8f9bb0;
-  padding-bottom: 0;
+  padding: 0;
   margin: 0;
+  position: relative;
 `;
 
 const StyledTextArea = styled.textarea`
-  height: 150px;
+  resize: none;
+  height: 100%;
+  width: calc(100% - 30px - 2rem);
+  padding: 1rem;
   background: none;
   border: none;
+
+  &:focus {
+    outline: 1px dotted #1f1f1f;
+  }
 `;
 
 const AddNotesButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   cursor: pointer;
   width: 30px;
   height: 30px;
@@ -136,8 +143,17 @@ const ContentView = () => {
         <Checkbox />
         <TodoViewColumn>
           <TodoViewHeader>
-            <div>
+            
               <h1>Create styleguide for aseio</h1>
+              <span>
+                <Button iconSize='1.2rem' position='right'>
+                  <Star />
+                </Button>
+                <Button iconSize='1.2rem' position='right'>
+                  <ThreeDotsVertical />
+                </Button>
+              </span>
+          </TodoViewHeader>
               <TodoDetails>
                 <span>
                   <Stopwatch />
@@ -148,12 +164,6 @@ const ContentView = () => {
                   <p>Remind me at {formatDate.getUKTime(todos[0].remind_at)}</p>
                 </span>
               </TodoDetails>
-            </div>
-            <span>
-              <Star />
-              <ThreeDotsVertical />
-            </span>
-          </TodoViewHeader>
           <TodoViewContent
             dangerouslySetInnerHTML={{ __html: todos[0].content }}
           />

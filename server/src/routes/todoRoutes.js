@@ -10,17 +10,19 @@ Router.get('/', async (req, res) => {
 });
 
 Router.post('/', async (req, res) => {
-  const { title, notes, isDone, isImportant, reminder, stepList } = req.body;
+  const { title, notes, is_done, is_important, reminder, step_list } = req.body;
 
   try {
     const todo = new Todo({
       title,
       notes,
-      isDone,
-      isImportant,
+      is_done,
+      is_important,
       reminder,
-      stepList,
+      step_list,
     });
+
+
     await todo.save();
     res.json({ message: 'New todo added to database' });
   } catch (err) {

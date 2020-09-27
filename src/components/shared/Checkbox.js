@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Check2 } from 'react-bootstrap-icons';
 
@@ -49,17 +49,12 @@ const StyledCheckbox = styled.div`
   }
 `;
 
-const Checkbox = () => {
-  const [isChecked, setIsChecked] = useState(false);
-  const onClickIsChecked = event => {
-    setIsChecked(!isChecked);
-    console.log(isChecked);
-  };
+const Checkbox = ({ checked, ...props }) => {
 
   return (
     <CheckboxContainer>
-      <HiddenCheckbox checked={isChecked} readOnly />
-      <StyledCheckbox checked={isChecked} onClick={onClickIsChecked}>
+      <HiddenCheckbox checked={checked} readOnly />
+      <StyledCheckbox checked={checked} {...props}>
         <Icon>
           <Check2 />
         </Icon>

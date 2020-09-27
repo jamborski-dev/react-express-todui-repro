@@ -1,5 +1,3 @@
-import { todos } from './__mock-data';
-
 import React from 'react';
 
 import GlobalStyles from './GlobalStyles';
@@ -10,21 +8,21 @@ import TopBar from './components/TopBar';
 import ListView from './components/ListView';
 import ContentView from './components/ContentView';
 
-import { TodoDataContext } from './context/TodoDataContext';
+import { TodoDataProvider } from './context/TodoDataContext';
 
 const App = () => {
   return (
     <>
       <GlobalStyles />
 
-      <TodoDataContext.Provider value={todos}>
         <Grid>
-          <SideBar />
-          <TopBar />
-          <ListView />
-          <ContentView />
+          <TodoDataProvider>
+            <SideBar />
+            <TopBar />
+            <ListView />
+            <ContentView />
+          </TodoDataProvider>
         </Grid>
-      </TodoDataContext.Provider>
     </>
   );
 };

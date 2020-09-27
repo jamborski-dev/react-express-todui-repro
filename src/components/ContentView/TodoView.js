@@ -1,9 +1,10 @@
-import { todos } from '../../__mock-data';
 import { formatDate } from '../../utils/helpers';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { StyledContentView } from './StyledContentView';
+
+import { TodoDataContext} from '../../context/TodoDataContext';
+
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
@@ -11,6 +12,7 @@ import {
   Stopwatch,
   ThreeDotsVertical,
   Star,
+  StarFill,
   Bell,
   Plus,
   ArrowRepeat,
@@ -18,7 +20,7 @@ import {
   Pen,
 } from 'react-bootstrap-icons';
 
-const TodoView = styled.div`
+const StyledTodoView = styled.div`
   padding: 2rem 1.5rem;
   padding-bottom: 0;
   padding-right: 4rem;
@@ -136,72 +138,70 @@ const AddNotesButton = styled.button`
   align-items: center;
 `;
 
-const ContentView = () => {
-  return (
-    <StyledContentView>
-      <TodoView>
-        <Checkbox />
-        <TodoViewColumn>
-          <TodoViewHeader>
-            
-              <h1>Create styleguide for aseio</h1>
-              <span>
-                <Button iconSize='1.2rem' position='right'>
-                  <Star />
-                </Button>
-                <Button iconSize='1.2rem' position='right'>
-                  <ThreeDotsVertical />
-                </Button>
-              </span>
-          </TodoViewHeader>
-              <TodoDetails>
-                <span>
-                  <Stopwatch />
-                  <p>{formatDate.getDate(todos[0].remind_at)}</p>
-                </span>
-                <span>
-                  <Bell />
-                  <p>Remind me at {formatDate.getUKTime(todos[0].remind_at)}</p>
-                </span>
-              </TodoDetails>
-          <TodoViewContent
-            dangerouslySetInnerHTML={{ __html: todos[0].content }}
-          />
-          <TodoSteps>
-            <StyledTextButton>
-              <Plus /> Add step
-            </StyledTextButton>
-            <ul>
-              <li>
-                <input type="checkbox" />
-                <label>started sprint</label>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <label>Get Developer's inputs</label>
-              </li>
-            </ul>
-          </TodoSteps>
-          <StyledTextButton>
-            <ArrowRepeat /> Repeat
-          </StyledTextButton>
-        </TodoViewColumn>
-        <TodoViewFooter>
-          <Attachments>
-            <StyledTextButton>
-              <Paperclip /> Add file
-            </StyledTextButton>
-          </Attachments>
-          <AddNotesContainer>
-            <StyledTextArea placeholder="Add notes.." />
-            <AddNotesButton>
-              <Pen />
-            </AddNotesButton>
-          </AddNotesContainer>
-        </TodoViewFooter>
-      </TodoView>
-    </StyledContentView>
-  );
-};
+const TodoView = () => {
+  const { todos, currentTodoId, markImportant, markDone } = useContext(TodoDataContext);
+  const [todo] = todos.filter(todo => todo.id === currentTodoId);
 
-export default ContentView;
+  return (
+    <StyledTodoView>
+      <Checkbox checked={todo.is_done} onClick={() => {markDone()}} />
+      <TodoViewColumn>
+        <TodoViewHeader> 
+            <h1>{todo.title}</h1>
+            <span>
+              <Button onClick={() => markImportant()} iconSize='1.2rem' position='right'>
+                { todo.is_important ? <StarFill /> : <Star /> }
+              </Button>
+              <Button iconSize='1.2rem' position='right'>
+                <ThreeDotsVertical />
+              </Button>
+            </span>
+        </TodoViewHeader>
+            <TodoDetails>
+              <span>
+                <Stopwatch />
+                <p>{formatDate.getDate(todo.reminder)}</p>
+              </span>
+              <span>
+                <Bell />
+                <p>Remind me at {formatDate.getUKTime(todo.reminder)}</p>
+              </span>
+            </TodoDetails>
+        <TodoViewContent
+          dangerouslySetInnerHTML={{ __html: todo.notes }}
+        />
+        <TodoSteps>
+          <StyledTextButton>
+            <Plus /> Add step
+          </StyledTextButton>
+          {/* <ul>
+            {todo.step_list.map(step => (
+              <li key={step._id}>
+                <input type="checkbox" name={step.step_content}/>
+                <label forHtml={step.step_content}>{step.step_content}</label>
+              </li>
+            ))}
+          </ul> */}
+        </TodoSteps>
+        <StyledTextButton>
+          <ArrowRepeat /> Repeat
+        </StyledTextButton>
+      </TodoViewColumn>
+      <TodoViewFooter>
+        <Attachments>
+          <StyledTextButton>
+            <Paperclip /> Add file
+          </StyledTextButton>
+        </Attachments>
+        <AddNotesContainer>
+          <StyledTextArea placeholder="Add notes.." />
+          <AddNotesButton>
+            <Pen />
+          </AddNotesButton>
+        </AddNotesContainer>
+      </TodoViewFooter>
+    </StyledTodoView>
+  )
+}
+
+export default TodoView;

@@ -1,5 +1,3 @@
-// import { todos } from '../../__mock-data';
-
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TodoDataContext } from '../../context/TodoDataContext';
@@ -80,9 +78,9 @@ const StyledListItemContent = styled.div`
 `;
 
 const ListView = () => {
-  const todos = useContext(TodoDataContext);
+  const { todos, toggleTodo, markDone, markImportant } = useContext(TodoDataContext);
 
-  console.log(todos);
+  
 
   return (
     <StyledListView>
@@ -100,14 +98,14 @@ const ListView = () => {
       <div>
         <ul>
           {todos.map(todo => (
-            <StyledListItem key={todo.id}>
-              <Checkbox />
+            <StyledListItem key={todo.id} onClick={() => toggleTodo(todo.id)}>
+              <Checkbox checked={todo.is_done} onClick={() => markDone(todo.id)} />
               <StyledListItemContent>
                 <h4>{todo.title}</h4>
                 <TodoDetails>
                   <span>
                     <Stopwatch />
-                    <p>{formatDate.getDate(todo.remind_at)}</p>
+                    <p>{formatDate.getDate(todo.reminder)}</p>
                   </span>
                   <span>
                     <FileEarmark />
@@ -117,7 +115,9 @@ const ListView = () => {
                   </span>
                 </TodoDetails>
               </StyledListItemContent>
-              {todo.important ? <StarFill /> : <Star />}
+              <Button iconSize='1.2rem' onClick={() => markImportant(todo.id)}>
+                {todo.is_important ? <StarFill /> : <Star />}
+              </Button>
             </StyledListItem>
           ))}
         </ul>

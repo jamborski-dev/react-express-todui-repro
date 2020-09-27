@@ -12,7 +12,9 @@ const StyledButton = styled.button`
   color: var(--navy);
   height: ${props => props.iconSize};
   width: ${props => props.iconSize};
-  margin: ${props => (props.position == 'left' ? '0 1rem 0 0' : '0 0 0 1rem')};
+  margin: ${props => (props.position === 'left' ? '0 1rem 0 0' : '0 0 0 1rem')};
+
+  cursor: pointer;
 
   > svg {
     height: ${props => props.iconSize};
@@ -27,13 +29,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, onClick, iconSize, position }) => {
+const Button = ({ children, ...props }) => {
   return (
-    <StyledButton
-      position={position}
-      iconSize={iconSize}
-      onClick={onClick}
-    >
+    <StyledButton {...props} >
       {children}
     </StyledButton>
   )

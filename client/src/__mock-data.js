@@ -10,7 +10,7 @@ import {
 export const menuItemsPrimary = [
   { name: 'Overview', icon: <Grid3x3Gap />, howMany: 0 },
   { name: 'Today', icon: <CalendarDate />, howMany: 0 },
-  { name: 'is_done', icon: <ListCheck />, howMany: 0 },
+  { name: 'Done', icon: <ListCheck />, howMany: 0 },
   { name: 'Important', icon: <Star />, howMany: 3 },
   { name: 'Scheduled', icon: <Alarm />, howMany: 9 },
 ];
@@ -39,6 +39,7 @@ export const todos = [
       is_done: false,
     </p>
     <p>Small Towns and Big States</p>`,
+    step_list: [],
     attachments: [],
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
@@ -51,6 +52,23 @@ export const todos = [
     is_done: true,
     notes:
       'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.',
+      step_list: [
+        {
+          id: 1,
+          step_content: 'some step',
+          is_done: false,
+        },
+        {
+          id: 2,
+          step_content: 'some step',
+          is_done: false,
+        },
+        {
+          id: 3,
+          step_content: 'some step',
+          is_done: false,
+        },
+      ],
       attachments: ['file', 'picture'],
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
@@ -63,6 +81,23 @@ export const todos = [
     is_done: false,
     notes:
       'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.',
+      step_list: [
+        {
+          id: 1,
+          step_content: 'some step',
+          is_done: false,
+        },
+        {
+          id: 2,
+          step_content: 'some step',
+          is_done: false,
+        },
+        {
+          id: 3,
+          step_content: 'some step',
+          is_done: false,
+        },
+      ],
       attachments: [],
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
@@ -75,9 +110,21 @@ export const todos = [
     is_done: false,
     notes:
       'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet.',
-      attachments: ['file', 'picture'],
+      step_list: [
+        {
+          id: 1,
+          step_content: 'some step',
+          is_done: false,
+        },
+        {
+          id: 2,
+          step_content: 'some step',
+          is_done: false,
+        },
+      ],
+      attachme3ts: ['file', 'picture'],
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
     updated_at: '2020-09-02T16:34:00Z',
   },
-];
+]

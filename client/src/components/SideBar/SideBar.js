@@ -4,6 +4,7 @@ import React from 'react';
 import Nav from '../Navigation';
 import { StyledSideBar } from './StyledSideBar';
 import { StyledLogo } from '../Logo/StyledLogo';
+import AddButton from '../shared/AddButton';
 
 const SideBar = () => {
   return (
@@ -11,7 +12,7 @@ const SideBar = () => {
       <StyledLogo>TODUI</StyledLogo>
       <Nav menuItems={menuItemsPrimary} />
       <Nav menuItems={menuItemsSecondary} />
-      {/* add ADD button */}
+      <AddButton />
     </StyledSideBar>
   );
 };

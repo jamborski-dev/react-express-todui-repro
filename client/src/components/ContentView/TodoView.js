@@ -1,13 +1,14 @@
-import { formatDate } from '../../utils/helpers';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { TodoDataContext} from '../../context/TodoDataContext';
+import { formatDate } from '../../utils/helpers';
+import { TodoDataContext } from '../../context/TodoDataContext';
 
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
+import Dropdown, { DropdownContainer } from '../shared/Dropdown';
 import {
   Stopwatch,
   ThreeDotsVertical,
@@ -18,6 +19,9 @@ import {
   ArrowRepeat,
   Paperclip,
   Pen,
+  Share,
+  Archive,
+  Trash,
 } from 'react-bootstrap-icons';
 
 const StyledTodoView = styled.div`
@@ -141,6 +145,7 @@ const AddNotesButton = styled.button`
 const TodoView = () => {
   const { todos, currentTodoId, markImportant, markDone } = useContext(TodoDataContext);
   const [todo] = todos.filter(todo => todo.id === currentTodoId);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
     <StyledTodoView>
@@ -152,9 +157,21 @@ const TodoView = () => {
               <Button onClick={() => markImportant()} iconSize='1.2rem' position='right'>
                 { todo.is_important ? <StarFill /> : <Star /> }
               </Button>
-              <Button iconSize='1.2rem' position='right'>
-                <ThreeDotsVertical />
-              </Button>
+              <DropdownContainer>
+                <Button 
+                  onClick={() => setOpenDropdown(!openDropdown)}
+                  iconSize="1.2rem" position="right">
+                  <ThreeDotsVertical />
+                </Button>
+                <Dropdown open={openDropdown}>
+                  <ul>
+                    <li><Pen />Edit</li>
+                    <li><Share />Share</li>
+                    <li><Archive />Archive</li>
+                    <li><Trash />Delete</li>
+                  </ul>
+                </Dropdown>
+              </DropdownContainer>
             </span>
         </TodoViewHeader>
             <TodoDetails>
@@ -174,14 +191,14 @@ const TodoView = () => {
           <StyledTextButton>
             <Plus /> Add step
           </StyledTextButton>
-          {/* <ul>
+          <ul>
             {todo.step_list.map(step => (
-              <li key={step._id}>
+              <li key={step.id}>
                 <input type="checkbox" name={step.step_content}/>
-                <label forHtml={step.step_content}>{step.step_content}</label>
+                <label htmlFor={step.step_content}>{step.step_content}</label>
               </li>
             ))}
-          </ul> */}
+          </ul>
         </TodoSteps>
         <StyledTextButton>
           <ArrowRepeat /> Repeat

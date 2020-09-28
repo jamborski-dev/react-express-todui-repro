@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import AddButton from '../shared/AddButton';
+
+import { TodoDataContext } from '../../context/TodoDataContext';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -10,10 +13,12 @@ const FlexContainer = styled.div`
 `;
 
 const DefaultView = () => {
+  const { addTodo } = useContext(TodoDataContext);
+
   return (
     <FlexContainer>
       <p>Select note from the list <strong>or</strong> add new...</p>
-      <button>+</button>
+      <AddButton onClick={() => addTodo()} />
     </FlexContainer>
   )
 }

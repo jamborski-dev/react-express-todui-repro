@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   display: flex;
   flex-flow: row nowrap;
   background: none;
@@ -15,6 +15,7 @@ const StyledButton = styled.button`
   margin: ${props => (props.position === 'left' ? '0 1rem 0 0' : '0 0 0 1rem')};
 
   cursor: pointer;
+  position: relative;
 
   > svg {
     height: ${props => props.iconSize};

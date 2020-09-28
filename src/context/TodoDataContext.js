@@ -29,6 +29,10 @@ export const TodoDataProvider = ({ children }) => {
     );
   };
 
+  const addTodo = () => {
+    console.log('adding todo');
+  }
+
   return (
     <TodoDataContext.Provider
       value={{
@@ -39,6 +43,7 @@ export const TodoDataProvider = ({ children }) => {
         toggleTodo,
         markImportant,
         markDone,
+        addTodo
       }}
     >
       {children}

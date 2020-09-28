@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { TodoDataContext } from '../../context/TodoDataContext';
 
@@ -7,6 +7,8 @@ import { StyledListView } from './StyledListView';
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
+import Dropdown, { DropdownContainer } from '../shared/Dropdown';
+
 import {
   Bell,
   Star,
@@ -15,6 +17,7 @@ import {
   ThreeDotsVertical,
   FileEarmark,
   Stopwatch,
+  Check,
 } from 'react-bootstrap-icons';
 
 const StyledListHeader = styled.div`
@@ -38,7 +41,7 @@ const StyledListHeader = styled.div`
 `;
 
 // TODO - merge above to HeaderBar / menu
-//   with TodoViewHeader 
+//   with TodoViewHeader
 
 const StyledListItem = styled.div`
   border-bottom: 1px solid var(--layout-border);
@@ -78,28 +81,43 @@ const StyledListItemContent = styled.div`
 `;
 
 const ListView = () => {
-  const { todos, toggleTodo, markDone, markImportant } = useContext(TodoDataContext);
+  const { todos, toggleTodo, markDone, markImportant } = useContext(
+    TodoDataContext
+  );
 
-  
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
     <StyledListView>
       <StyledListHeader>
         <h3>DESIGN</h3>
         <span>
-          <Button iconSize='1.2rem' position='right'>
+          <Button iconSize="1.2rem" position="right">
             <ArrowDownUp />
           </Button>
-          <Button iconSize='1.2rem' position='right'>
-            <ThreeDotsVertical />
-          </Button>
+          <DropdownContainer>
+            <Button 
+              onClick={() => setOpenDropdown(!openDropdown)}
+              iconSize="1.2rem" position="right">
+              <ThreeDotsVertical />
+            </Button>
+            <Dropdown open={openDropdown}>
+              <ul>
+                <li><Check width="50" height="50" />Toggle all done</li>
+                <li><Star />Toggle all important</li>
+              </ul>
+            </Dropdown>
+          </DropdownContainer>
         </span>
       </StyledListHeader>
       <div>
         <ul>
           {todos.map(todo => (
             <StyledListItem key={todo.id} onClick={() => toggleTodo(todo.id)}>
-              <Checkbox checked={todo.is_done} onClick={() => markDone(todo.id)} />
+              <Checkbox
+                checked={todo.is_done}
+                onClick={() => markDone(todo.id)}
+              />
               <StyledListItemContent>
                 <h4>{todo.title}</h4>
                 <TodoDetails>
@@ -115,7 +133,7 @@ const ListView = () => {
                   </span>
                 </TodoDetails>
               </StyledListItemContent>
-              <Button iconSize='1.2rem' onClick={() => markImportant(todo.id)}>
+              <Button iconSize="1.2rem" onClick={() => markImportant(todo.id)}>
                 {todo.is_important ? <StarFill /> : <Star />}
               </Button>
             </StyledListItem>

@@ -15,7 +15,7 @@ const StyledDropdown = styled.div`
   top: 3rem;
   left: 0;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
-  transform: ${props => props.open ? 'translateX(-70%) translateY(0) scale(1)' : 'translateX(-70%) translateY(-50%) scale(.2)'};
+  transform: ${props => props.open ? 'translateX(-70%) translateY(0) scale(1)' : 'translateX(-50%) translateY(-50%) scale(.2)'};
   opacity: ${props => props.open ? 1 : 0};
   transition: all .15s;
 

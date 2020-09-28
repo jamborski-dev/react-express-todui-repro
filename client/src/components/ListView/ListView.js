@@ -81,9 +81,13 @@ const StyledListItemContent = styled.div`
 `;
 
 const ListView = () => {
-  const { todos, toggleTodo, markDone, markImportant } = useContext(
-    TodoDataContext
-  );
+  const { 
+    todos, 
+    toggleTodo, 
+    markDone, 
+    markImportant,
+    filtered
+  } = useContext(TodoDataContext);
 
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -112,7 +116,7 @@ const ListView = () => {
       </StyledListHeader>
       <div>
         <ul>
-          {todos.map(todo => (
+          {filtered.map(todo => (
             <StyledListItem key={todo.id} onClick={() => toggleTodo(todo.id)}>
               <Checkbox
                 checked={todo.is_done}
@@ -121,16 +125,22 @@ const ListView = () => {
               <StyledListItemContent>
                 <h4>{todo.title}</h4>
                 <TodoDetails>
-                  <span>
-                    <Stopwatch />
-                    <p>{formatDate.getDate(todo.reminder)}</p>
-                  </span>
-                  <span>
-                    <FileEarmark />
-                  </span>
-                  <span>
-                    <Bell />
-                  </span>
+                  { todo.reminder ? 
+                      <span>
+                        <Stopwatch />
+                        <p>{formatDate.getDate(todo.reminder)}</p>
+                      </span>
+                    : null }
+                  { todo.attachments ? 
+                      <span>
+                        <FileEarmark />
+                      </span>
+                    : null }
+                  { todo.reminder ? 
+                    <span>
+                      <Bell />
+                    </span>
+                    : null }
                 </TodoDetails>
               </StyledListItemContent>
               <Button iconSize="1.2rem" onClick={() => markImportant(todo.id)}>

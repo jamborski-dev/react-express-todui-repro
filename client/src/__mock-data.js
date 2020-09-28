@@ -8,17 +8,17 @@ import {
 } from 'react-bootstrap-icons';
 
 export const menuItemsPrimary = [
-  { name: 'Overview', icon: <Grid3x3Gap />, howMany: 0 },
-  { name: 'Today', icon: <CalendarDate />, howMany: 0 },
-  { name: 'Done', icon: <ListCheck />, howMany: 0 },
-  { name: 'Important', icon: <Star />, howMany: 3 },
-  { name: 'Scheduled', icon: <Alarm />, howMany: 9 },
+  { name: 'Overview', icon: <Grid3x3Gap />, filter: 'all', howMany: 0 },
+  { name: 'Today', icon: <CalendarDate />, filter: 'today', howMany: 0 },
+  { name: 'Done', icon: <ListCheck />, filter: 'done', howMany: 0 },
+  { name: 'Important', icon: <Star />, filter: 'important', howMany: 3 },
+  { name: 'Scheduled', icon: <Alarm />, filter: 'scheduled', howMany: 9 },
 ];
 
 export const menuItemsSecondary = [
-  { name: 'Design', icon: null, howMany: 21, color: 'blue' },
-  { name: 'Marketing', icon: null, howMany: 8, color: 'orange' },
-  { name: 'Development', icon: null, howMany: 37, color: 'salmon' },
+  { name: 'Design', icon: null, filter: 'design', howMany: 21, color: 'blue' },
+  { name: 'Marketing', icon: null, filter: 'marketing', howMany: 8, color: 'orange' },
+  { name: 'Development', icon: null, filter: 'development', howMany: 37, color: 'salmon' },
 ];
 
 export const todos = [
@@ -41,9 +41,10 @@ export const todos = [
     <p>Small Towns and Big States</p>`,
     step_list: [],
     attachments: [],
-    reminder: '2020-12-23T12:30:00Z',
+    reminder: '2020-09-28T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
     updated_at: '2020-09-02T16:34:00Z',
+    category: 'marketing',
   },
   {
     id: 2,
@@ -73,6 +74,7 @@ export const todos = [
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
     updated_at: '2020-09-02T16:34:00Z',
+    category: 'design',
   },
   {
     id: 3,
@@ -99,9 +101,10 @@ export const todos = [
         },
       ],
       attachments: [],
-    reminder: '2020-12-23T12:30:00Z',
+    reminder: null,
     created_at: '2020-09-02T16:34:00Z',
     updated_at: '2020-09-02T16:34:00Z',
+    category: 'design',
   },
   {
     id: 4,
@@ -126,5 +129,6 @@ export const todos = [
     reminder: '2020-12-23T12:30:00Z',
     created_at: '2020-09-02T16:34:00Z',
     updated_at: '2020-09-02T16:34:00Z',
+    category: null,
   },
 ]

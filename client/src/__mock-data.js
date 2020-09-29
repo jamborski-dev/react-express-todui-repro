@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap-icons';
 
 export const menuItemsPrimary = [
-  { name: 'Overview', icon: <Grid3x3Gap />, filter: 'all', howMany: 0 },
+  { name: 'Overview', icon: <Grid3x3Gap />, filter: 'overview', howMany: 0 },
   { name: 'Today', icon: <CalendarDate />, filter: 'today', howMany: 0 },
   { name: 'Done', icon: <ListCheck />, filter: 'done', howMany: 0 },
   { name: 'Important', icon: <Star />, filter: 'important', howMany: 3 },
@@ -26,6 +26,7 @@ export const todos = [
     id: 1,
     title: 'Calendar component iteration',
     is_important: true,
+    is_done: false,
     notes: `<p>
       Few would argue that, despite the advancement of feminism over the
       past three decades, women still face a double standard when it

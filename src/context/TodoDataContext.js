@@ -65,11 +65,9 @@ export const TodoDataProvider = ({ children }) => {
 
   const markAllDone = () => {
     setTodos(todos => todos.map(todo => todo.is_done === false ? { ...todo, is_done: true } : todo ));
-    setFiltered(filtered);
   }
   const markAllImportant = () => {
     setTodos(todos => todos.map(todo => todo.is_important === false ? { ...todo, is_important: true } : todo ));
-    setFiltered(filtered);
   }
 
   const addTodo = () => {

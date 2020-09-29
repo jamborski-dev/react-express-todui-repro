@@ -35,18 +35,23 @@ export const StyledNavItem = styled.li`
 
   /* notification count  */
   > span:nth-child(3) {
+    justify-self: end;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
     background: var(--navy);
     color: #fff;
     border-radius: 100px;
     font-size: 0.5rem;
-    justify-self: end;
     width: 20px;
     height: 20px;
-    text-align: center;
-    padding-top: 5px;
+    /* text-align: center; */
+    /* padding-top: 5px; */
   }
 
-  > .empty {
+  > span:nth-child(3).empty {
     display: none;
   }
 

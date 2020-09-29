@@ -8,6 +8,7 @@ export const TodoDataProvider = ({ children }) => {
   const [todos, setTodos] = useState(initialData);
   const [currentTodoId, setCurrentTodoId] = useState(null);
   const [filtered, setFiltered] = useState(todos);
+  const [listTitle, setListTitle] = useState('Overview');
 
   const toggleTodo = id => {
     setCurrentTodoId(id);
@@ -32,7 +33,10 @@ export const TodoDataProvider = ({ children }) => {
   };
 
   const applyFilter = (filter, allTodos = todos) => {
-    if (filter === 'all') {
+
+    setListTitle(filter);
+
+    if (filter === 'overview') {
       setFiltered(allTodos);
     }
 
@@ -59,6 +63,15 @@ export const TodoDataProvider = ({ children }) => {
     }
   }
 
+  const markAllDone = () => {
+    setTodos(todos => todos.map(todo => todo.is_done === false ? { ...todo, is_done: true } : todo ));
+    setFiltered(filtered);
+  }
+  const markAllImportant = () => {
+    setTodos(todos => todos.map(todo => todo.is_important === false ? { ...todo, is_important: true } : todo ));
+    setFiltered(filtered);
+  }
+
   const addTodo = () => {
   }
 
@@ -74,7 +87,10 @@ export const TodoDataProvider = ({ children }) => {
         markDone,
         addTodo,
         filtered,
-        applyFilter
+        applyFilter,
+        listTitle,
+        markAllDone,
+        markAllImportant,
       }}
     >
       {children}

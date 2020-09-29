@@ -17,7 +17,7 @@ import {
   ThreeDotsVertical,
   FileEarmark,
   Stopwatch,
-  Check,
+  CheckCircleFill,
 } from 'react-bootstrap-icons';
 
 const StyledListHeader = styled.div`
@@ -80,13 +80,26 @@ const StyledListItemContent = styled.div`
   }
 `;
 
+const EmptyList = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #b0b0b0;
+  font-style: italic;
+  padding-top: 3rem;
+`;
+
 const ListView = () => {
   const { 
     todos, 
     toggleTodo, 
     markDone, 
     markImportant,
-    filtered
+    filtered,
+    listTitle,
+    markAllDone,
+    markAllImportant,
   } = useContext(TodoDataContext);
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -94,7 +107,7 @@ const ListView = () => {
   return (
     <StyledListView>
       <StyledListHeader>
-        <h3>DESIGN</h3>
+      <h3>{listTitle.toUpperCase()}</h3>
         <span>
           <Button iconSize="1.2rem" position="right">
             <ArrowDownUp />
@@ -107,8 +120,8 @@ const ListView = () => {
             </Button>
             <Dropdown open={openDropdown}>
               <ul>
-                <li><Check width="50" height="50" />Toggle all done</li>
-                <li><Star />Toggle all important</li>
+                <li onClick={() => markAllDone()}><CheckCircleFill />Mark all done</li>
+                <li onClick={() => markAllImportant()}><StarFill />Mark all important</li>
               </ul>
             </Dropdown>
           </DropdownContainer>
@@ -116,7 +129,12 @@ const ListView = () => {
       </StyledListHeader>
       <div>
         <ul>
-          {filtered.map(todo => (
+          { filtered.length === 0 ? 
+            <EmptyList>
+              <p>There is nothing to show..</p>
+            </EmptyList>
+          
+            : filtered.map(todo => (
             <StyledListItem key={todo.id} onClick={() => toggleTodo(todo.id)}>
               <Checkbox
                 checked={todo.is_done}

@@ -47,8 +47,6 @@ export const StyledNavItem = styled.li`
     font-size: 0.5rem;
     width: 20px;
     height: 20px;
-    /* text-align: center; */
-    /* padding-top: 5px; */
   }
 
   > span:nth-child(3).empty {

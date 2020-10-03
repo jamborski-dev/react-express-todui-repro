@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { StyledTopBar } from './StyledTopBar';
 import { StyledSearchBar } from './StyledSearchBar';
 import { StyledSearchInput } from './StyledSearchInput';
-import { Bell, ChevronDown, Search } from 'react-bootstrap-icons';
+import {
+  Bell,
+  ChevronDown,
+  Search,
+  Sliders,
+  Bug,
+  DoorOpen,
+} from 'react-bootstrap-icons';
+import Dropdown, { DropdownContainer } from '../shared/Dropdown';
 
 const SearchIconContainer = styled.span`
   width: 2rem;
@@ -20,6 +28,33 @@ const NotificationContainer = styled.div`
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+`;
+
+const IconContainer = styled.span`
+  width: 40%;
+
+  > svg {
+    width: 100%;
+    height: auto;
+  }
+`;
+
+const NotificationDot = styled.span`
+  background: red;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  top: 14px;
+  left: 30px;
+  position: absolute;
+  border: 2px solid #f4f5f7;
 `;
 
 const ProfileMenuContainer = styled.div`
@@ -52,6 +87,8 @@ const Avatar = styled.div`
 `;
 
 const TopBar = () => {
+  const [openDropdown, setOpenDropdown] = useState(false);
+
   return (
     <StyledTopBar>
       <StyledSearchBar>
@@ -61,7 +98,10 @@ const TopBar = () => {
         <StyledSearchInput type="text" name="search" placeholder="Search..." />
       </StyledSearchBar>
       <NotificationContainer>
-        <Bell />
+        <IconContainer>
+          <Bell />
+        </IconContainer>
+        <NotificationDot />
       </NotificationContainer>
       <ProfileMenuContainer>
         <Avatar>
@@ -71,7 +111,25 @@ const TopBar = () => {
           />
         </Avatar>
         <span>Lucas Powell</span>
-        <ChevronDown />
+        <DropdownContainer>
+          <ChevronDown onClick={() => setOpenDropdown(!openDropdown)} />
+          <Dropdown open={openDropdown}>
+            <ul>
+              <li>
+                <Sliders />
+                Account settings
+              </li>
+              <li>
+                <Bug />
+                Report a bug
+              </li>
+              <li>
+                <DoorOpen />
+                Logout
+              </li>
+            </ul>
+          </Dropdown>
+        </DropdownContainer>
       </ProfileMenuContainer>
     </StyledTopBar>
   );

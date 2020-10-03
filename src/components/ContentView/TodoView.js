@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { formatDate } from '../../utils/helpers';
 import { TodoDataContext } from '../../context/TodoDataContext';
+import { ModalContext } from '../../context/ModalContext';
 
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
@@ -144,8 +145,10 @@ const AddNotesButton = styled.button`
 
 const TodoView = () => {
   const { todos, currentTodoId, markImportant, markDone } = useContext(TodoDataContext);
+  const { openModal } = useContext(ModalContext);
   const [todo] = todos.filter(todo => todo.id === currentTodoId);
   const [openDropdown, setOpenDropdown] = useState(false);
+
 
   return (
     <StyledTodoView>
@@ -165,7 +168,7 @@ const TodoView = () => {
                 </Button>
                 <Dropdown open={openDropdown}>
                   <ul>
-                    <li><Pen />Edit</li>
+                    <li onClick={() => openModal()}><Pen />Edit</li>
                     <li><Share />Share</li>
                     <li><Archive />Archive</li>
                     <li><Trash />Delete</li>

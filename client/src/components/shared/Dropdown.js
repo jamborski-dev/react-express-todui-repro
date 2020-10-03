@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export const DropdownContainer = styled.span`
@@ -9,12 +9,12 @@ const StyledDropdown = styled.div`
   font-size: 1rem;
   padding: 0.75rem;
   background: #fff;
-  border-radius: 22px;
+  border-radius: var(--border-radius);
   position: absolute;
   z-index: 1000;
   top: 3rem;
   left: 0;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow);
   transform: ${props => props.open ? 'translateX(-70%) translateY(0) scale(1)' : 'translateX(-50%) translateY(-50%) scale(.2)'};
   opacity: ${props => props.open ? 1 : 0};
   transition: all .15s;
@@ -52,8 +52,12 @@ const StyledDropdown = styled.div`
   }
 `;
 
+export const useDropdown = outerRef => {
+  const [pos, setPos] = useState(null);
+}
+
 const Dropdown = ({ open, children }) => {
-  return (
+   return (
     <StyledDropdown open={open}>
       {children}
     </StyledDropdown>

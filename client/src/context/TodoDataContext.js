@@ -6,8 +6,8 @@ export const TodoDataContext = createContext(null);
 
 export const TodoDataProvider = ({ children }) => {
   const [todos, setTodos] = useState(initialData);
-  const [currentTodoId, setCurrentTodoId] = useState(null);
   const [filtered, setFiltered] = useState(todos);
+  const [currentTodoId, setCurrentTodoId] = useState(null);
   const [listTitle, setListTitle] = useState('Overview');
 
   const toggleTodo = id => {
@@ -22,10 +22,24 @@ export const TodoDataProvider = ({ children }) => {
           : todo
       )
     );
+
+    setFiltered(todos =>
+      todos.map(todo =>
+        todo.id === id
+          ? { ...todo, is_important: !todo.is_important }
+          : todo
+      )
+    );
   };
 
   const markDone = (id = currentTodoId) => {
     setTodos(todos =>
+      todos.map(todo =>
+        todo.id === id ? { ...todo, is_done: !todo.is_done } : todo
+      )
+    );
+
+    setFiltered(todos =>
       todos.map(todo =>
         todo.id === id ? { ...todo, is_done: !todo.is_done } : todo
       )
@@ -45,8 +59,6 @@ export const TodoDataProvider = ({ children }) => {
     }
     
     if (filter === 'today') {
-      
-      console.log(formatDate.getDate(Date.now()));
       setFiltered(allTodos.filter(todo => formatDate.getDate(todo.reminder) === formatDate.getDate(Date.now())));
     }
     
@@ -63,11 +75,39 @@ export const TodoDataProvider = ({ children }) => {
     }
   }
 
+
   const markAllDone = () => {
-    setTodos(todos => todos.map(todo => todo.is_done === false ? { ...todo, is_done: true } : todo ));
+    const ids = [];
+    setFiltered(todos => todos.map(todo => {
+      let updatedTodo;
+      if (!todo.is_done) {
+        updatedTodo = { ...todo, is_done: true };
+        ids.push(todo.id);
+        return updatedTodo;
+      }
+      return todo;
+    }));
+
+    ids.forEach(id => {
+      setTodos(todos => todos.map(todo => todo.id === id ? { ...todo, is_done: true } : todo));
+    });
+    
   }
   const markAllImportant = () => {
-    setTodos(todos => todos.map(todo => todo.is_important === false ? { ...todo, is_important: true } : todo ));
+    const ids = [];
+    setFiltered(todos => todos.map(todo => {
+      let updatedTodo;
+      if (!todo.is_important) {
+        updatedTodo = { ...todo, is_important: true };
+        ids.push(todo.id);
+        return updatedTodo;
+      }
+      return todo;
+    }));
+
+    ids.forEach(id => {
+      setTodos(todos => todos.map(todo => todo.id === id ? { ...todo, is_important: true } : todo));
+    });
   }
 
   const addTodo = () => {
@@ -85,6 +125,7 @@ export const TodoDataProvider = ({ children }) => {
         markDone,
         addTodo,
         filtered,
+        setFiltered,
         applyFilter,
         listTitle,
         markAllDone,

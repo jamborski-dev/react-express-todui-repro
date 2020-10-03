@@ -96,8 +96,9 @@ const ListView = () => {
     toggleTodo, 
     markDone, 
     markImportant,
-    filtered,
     listTitle,
+    filtered,
+    setFiltered,
     markAllDone,
     markAllImportant,
   } = useContext(TodoDataContext);

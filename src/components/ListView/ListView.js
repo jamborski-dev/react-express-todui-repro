@@ -113,7 +113,13 @@ const ListView = () => {
           <Button iconSize="1.2rem" position="right">
             <ArrowDownUp />
           </Button>
-          <DropdownContainer>
+          <Dropdown icon={<ThreeDotsVertical />}>
+            <ul>
+              <li onClick={() => markAllDone()}><CheckCircleFill />Mark all done</li>
+              <li onClick={() => markAllImportant()}><StarFill />Mark all important</li>
+            </ul>
+          </Dropdown>
+          {/* <DropdownContainer>
             <Button 
               onClick={() => setOpenDropdown(!openDropdown)}
               iconSize="1.2rem" position="right">
@@ -125,7 +131,7 @@ const ListView = () => {
                 <li onClick={() => markAllImportant()}><StarFill />Mark all important</li>
               </ul>
             </Dropdown>
-          </DropdownContainer>
+          </DropdownContainer> */}
         </span>
       </StyledListHeader>
       <div>

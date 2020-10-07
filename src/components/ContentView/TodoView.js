@@ -9,7 +9,7 @@ import { ModalContext } from '../../context/ModalContext';
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
-import Dropdown, { DropdownContainer } from '../shared/Dropdown';
+import Dropdown from '../shared/Dropdown';
 import {
   Stopwatch,
   ThreeDotsVertical,
@@ -160,21 +160,14 @@ const TodoView = () => {
               <Button onClick={() => markImportant()} iconSize='1.2rem' position='right'>
                 { todo.is_important ? <StarFill /> : <Star /> }
               </Button>
-              <DropdownContainer>
-                <Button 
-                  onClick={() => setOpenDropdown(!openDropdown)}
-                  iconSize="1.2rem" position="right">
-                  <ThreeDotsVertical />
-                </Button>
-                <Dropdown open={openDropdown}>
+                <Dropdown icon={<ThreeDotsVertical />}>
                   <ul>
-                    <li onClick={() => openModal()}><Pen />Edit</li>
+                  <li onClick={() => openModal()}><Pen />Edit</li>
                     <li><Share />Share</li>
                     <li><Archive />Archive</li>
                     <li><Trash />Delete</li>
                   </ul>
                 </Dropdown>
-              </DropdownContainer>
             </span>
         </TodoViewHeader>
             <TodoDetails>

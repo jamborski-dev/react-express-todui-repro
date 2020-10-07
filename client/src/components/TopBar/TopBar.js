@@ -111,25 +111,13 @@ const TopBar = () => {
           />
         </Avatar>
         <span>Lucas Powell</span>
-        <DropdownContainer>
-          <ChevronDown onClick={() => setOpenDropdown(!openDropdown)} />
-          <Dropdown open={openDropdown}>
+          <Dropdown icon={<ChevronDown />}>
             <ul>
-              <li>
-                <Sliders />
-                Account settings
-              </li>
-              <li>
-                <Bug />
-                Report a bug
-              </li>
-              <li>
-                <DoorOpen />
-                Logout
-              </li>
+              <li><Sliders />Account settings</li>
+              <li><Bug />Report a bug</li>
+              <li><DoorOpen />Logout</li>
             </ul>
           </Dropdown>
-        </DropdownContainer>
       </ProfileMenuContainer>
     </StyledTopBar>
   );

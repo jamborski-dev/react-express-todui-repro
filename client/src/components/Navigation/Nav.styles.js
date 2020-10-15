@@ -73,3 +73,8 @@ export const StyledNavItem = styled.li`
     background: var(--menu-hover);
   }
 `;
+
+export const StyledNavList = styled.ul`
+  margin-bottom: 3rem;
+  margin-left: -1rem;
+`;

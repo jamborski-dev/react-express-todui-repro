@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { StyledNavItem } from './StyledNavItem';
-import { StyledNavList } from './StyledNavList.js';
+import { StyledNavItem, StyledNavList } from './Nav.styles';
 
 import { TodoDataContext } from '../../context/TodoDataContext';
 

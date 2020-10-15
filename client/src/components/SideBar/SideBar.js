@@ -2,9 +2,8 @@ import { menuItemsPrimary, menuItemsSecondary } from '../../__mock-data';
 
 import React from 'react';
 import Nav from '../Navigation';
-import { StyledSideBar } from './StyledSideBar';
-import { StyledLogo } from '../Logo/StyledLogo';
 import AddButton from '../shared/AddButton';
+import { StyledSideBar, StyledLogo } from './SideBar.styles';
 
 const SideBar = () => {
   return (

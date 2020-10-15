@@ -1,15 +1,19 @@
 import React, { useContext, useState, createRef } from 'react';
-import styled from 'styled-components';
 import { TodoDataContext } from '../../context/TodoDataContext';
-
+import useOutsideClick from '../../hooks/useOutsideClick';
 import { formatDate } from '../../utils/helpers';
-import { StyledListView } from './StyledListView';
+
+import { 
+  StyledListView,
+  StyledListHeader,
+  StyledListItem,
+  StyledListItemContent,
+  EmptyList
+} from './ListView.styles';
 import { TodoDetails } from '../shared/TodoDetails';
+import Dropdown, { DropdownContainer } from '../shared/Dropdown';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
-import Dropdown, { DropdownContainer } from '../shared/Dropdown';
-
-import useOutsideClick from '../../hooks/useOutsideClick';
 
 import {
   Bell,
@@ -22,75 +26,6 @@ import {
   CheckCircleFill,
 } from 'react-bootstrap-icons';
 
-const StyledListHeader = styled.div`
-  padding: 1rem 1.5rem;
-  border-bottom: 5px solid var(--blue);
-
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-
-  > h3 {
-    /* display: inline; */
-    margin: 0;
-  }
-
-  > span {
-    display: flex;
-    flex-flow: row nowrap;
-  }
-`;
-
-// TODO - merge above to HeaderBar / menu
-//   with TodoViewHeader
-
-const StyledListItem = styled.div`
-  border-bottom: 1px solid var(--layout-border);
-  padding: 1.5rem 1.5rem;
-
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-
-  transition: background 0.1s ease-out;
-  cursor: pointer;
-
-  > svg {
-    cursor: pointer;
-    width: auto;
-    width: 20px;
-    height: 20px;
-  }
-
-  :hover {
-    background: var(--menu-hover);
-  }
-`;
-
-const StyledListItemContent = styled.div`
-  width: 100%;
-  margin-left: 1rem;
-
-  > h4 {
-    display: block;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-`;
-
-const EmptyList = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-  font-size: 0.75rem;
-  color: #b0b0b0;
-  font-style: italic;
-  padding-top: 3rem;
-`;
 
 const ListView = () => {
   const { 

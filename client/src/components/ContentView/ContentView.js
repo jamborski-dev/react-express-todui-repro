@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { TodoDataContext } from '../../context/TodoDataContext';
 
-import { StyledContentView } from './StyledContentView';
+import { StyledContentView } from './ContentView.styles';
+import DefaultView from './EmptyView';
 import TodoView from './TodoView';
-import DefaultView from './DefaultView';
 
 const ContentView = () => {
   const { currentTodoId } = useContext(TodoDataContext);

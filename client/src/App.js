@@ -11,7 +11,6 @@ import Modal from './components/Modal';
 
 import { TodoDataProvider } from './context/TodoDataContext';
 import { ModalProvider } from './context/ModalContext';
-import { DropdownProvider } from './context/DropdownContext';
 
 const App = () => {
   return (
@@ -20,13 +19,11 @@ const App = () => {
       <Grid>
         <TodoDataProvider>
           <ModalProvider>
-            <ModalProvider>
-              <SideBar />
-              <TopBar />
-              <ListView />
-              <ContentView />
-              <Modal />
-            </ModalProvider>
+            <SideBar />
+            <TopBar />
+            <ListView />
+            <ContentView />
+            <Modal />
           </ModalProvider>
         </TodoDataProvider>
       </Grid>

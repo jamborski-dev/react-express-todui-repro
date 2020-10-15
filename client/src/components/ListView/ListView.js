@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, createRef } from 'react';
 import styled from 'styled-components';
 import { TodoDataContext } from '../../context/TodoDataContext';
 
@@ -8,6 +8,8 @@ import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
 import Dropdown, { DropdownContainer } from '../shared/Dropdown';
+
+import useOutsideClick from '../../hooks/useOutsideClick';
 
 import {
   Bell,
@@ -92,18 +94,21 @@ const EmptyList = styled.div`
 
 const ListView = () => {
   const { 
-    todos, 
     toggleTodo, 
     markDone, 
     markImportant,
     listTitle,
     filtered,
-    setFiltered,
     markAllDone,
     markAllImportant,
   } = useContext(TodoDataContext);
 
   const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdownRef = createRef();
+  
+  useOutsideClick(dropdownRef, () => {
+    setOpenDropdown(false);
+  });
 
   return (
     <StyledListView>
@@ -113,25 +118,18 @@ const ListView = () => {
           <Button iconSize="1.2rem" position="right">
             <ArrowDownUp />
           </Button>
-          <Dropdown icon={<ThreeDotsVertical />}>
-            <ul>
-              <li onClick={() => markAllDone()}><CheckCircleFill />Mark all done</li>
-              <li onClick={() => markAllImportant()}><StarFill />Mark all important</li>
-            </ul>
-          </Dropdown>
-          {/* <DropdownContainer>
+          <DropdownContainer>
             <Button 
               onClick={() => setOpenDropdown(!openDropdown)}
               iconSize="1.2rem" position="right">
               <ThreeDotsVertical />
             </Button>
-            <Dropdown open={openDropdown}>
-              <ul>
+            {openDropdown && 
+              <Dropdown ref={dropdownRef}>
                 <li onClick={() => markAllDone()}><CheckCircleFill />Mark all done</li>
                 <li onClick={() => markAllImportant()}><StarFill />Mark all important</li>
-              </ul>
-            </Dropdown>
-          </DropdownContainer> */}
+              </Dropdown>}
+          </DropdownContainer>
         </span>
       </StyledListHeader>
       <div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Button from '../shared/Button';
 import { Plus } from 'react-bootstrap-icons';

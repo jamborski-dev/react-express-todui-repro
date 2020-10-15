@@ -24,18 +24,14 @@ export const StyledButton = styled.button`
 
   &:hover {
     color: var(--blue);
-    background: rgba(0,0,0,0.1);
-    /* box-shadow: -2px -2px 5px 2px rgba(255,255,255,1), 
-    2px 2px 5px 0 rgba(0,0,0,0.4); */
+    background: rgba(0, 0, 0, 0.1);
   }
 `;
 
 const Button = ({ children, ...props }) => {
   return (
-    <StyledButton {...props} >
-      {children}
-    </StyledButton>
-  )
-}
+      <StyledButton {...props}>{children}</StyledButton>
+  );
+};
 
 export default Button;

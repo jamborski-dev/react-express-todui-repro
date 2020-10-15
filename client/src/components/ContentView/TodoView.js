@@ -1,15 +1,17 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, createRef } from 'react';
 import styled from 'styled-components';
 
 import { formatDate } from '../../utils/helpers';
 import { TodoDataContext } from '../../context/TodoDataContext';
 import { ModalContext } from '../../context/ModalContext';
 
+import useOutsideClick from '../../hooks/useOutsideClick';
+
 import { TodoDetails } from '../shared/TodoDetails';
 import Checkbox from '../shared/Checkbox';
 import Button from '../shared/Button';
-import Dropdown from '../shared/Dropdown';
+import Dropdown, { DropdownContainer } from '../shared/Dropdown';
 import {
   Stopwatch,
   ThreeDotsVertical,
@@ -147,7 +149,12 @@ const TodoView = () => {
   const { todos, currentTodoId, markImportant, markDone } = useContext(TodoDataContext);
   const { openModal } = useContext(ModalContext);
   const [todo] = todos.filter(todo => todo.id === currentTodoId);
+
   const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdownRef = createRef();
+  useOutsideClick(dropdownRef, () => {
+    setOpenDropdown(false);
+  });
 
 
   return (
@@ -160,26 +167,32 @@ const TodoView = () => {
               <Button onClick={() => markImportant()} iconSize='1.2rem' position='right'>
                 { todo.is_important ? <StarFill /> : <Star /> }
               </Button>
-                <Dropdown icon={<ThreeDotsVertical />}>
-                  <ul>
-                  <li onClick={() => openModal()}><Pen />Edit</li>
-                    <li><Share />Share</li>
+              <DropdownContainer>
+                <Button 
+                  onClick={() => setOpenDropdown(!openDropdown)}
+                  iconSize="1.2rem" position="right">
+                  <ThreeDotsVertical />
+                </Button>
+                {openDropdown && 
+                  <Dropdown ref={dropdownRef}>
+                    <li onClick={() => openModal()}><Pen />Edit</li>
+                    <li><Share />Share with friends</li>
                     <li><Archive />Archive</li>
                     <li><Trash />Delete</li>
-                  </ul>
-                </Dropdown>
+                  </Dropdown>}
+              </DropdownContainer>
             </span>
-        </TodoViewHeader>
-            <TodoDetails>
-              <span>
-                <Stopwatch />
-                <p>{formatDate.getDate(todo.reminder)}</p>
-              </span>
-              <span>
-                <Bell />
-                <p>Remind me at {formatDate.getUKTime(todo.reminder)}</p>
-              </span>
-            </TodoDetails>
+          </TodoViewHeader>
+          <TodoDetails>
+            <span>
+              <Stopwatch />
+              <p>{formatDate.getDate(todo.reminder)}</p>
+            </span>
+            <span>
+              <Bell />
+              <p>Remind me at {formatDate.getUKTime(todo.reminder)}</p>
+            </span>
+          </TodoDetails>
         <TodoViewContent
           dangerouslySetInnerHTML={{ __html: todo.notes }}
         />

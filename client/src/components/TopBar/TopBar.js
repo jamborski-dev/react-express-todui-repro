@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { StyledTopBar } from './StyledTopBar';
@@ -8,11 +8,7 @@ import {
   Bell,
   ChevronDown,
   Search,
-  Sliders,
-  Bug,
-  DoorOpen,
 } from 'react-bootstrap-icons';
-import Dropdown, { DropdownContainer } from '../shared/Dropdown';
 
 const SearchIconContainer = styled.span`
   width: 2rem;
@@ -87,7 +83,6 @@ const Avatar = styled.div`
 `;
 
 const TopBar = () => {
-  const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
     <StyledTopBar>
@@ -111,13 +106,7 @@ const TopBar = () => {
           />
         </Avatar>
         <span>Lucas Powell</span>
-          <Dropdown icon={<ChevronDown />}>
-            <ul>
-              <li><Sliders />Account settings</li>
-              <li><Bug />Report a bug</li>
-              <li><DoorOpen />Logout</li>
-            </ul>
-          </Dropdown>
+          <ChevronDown />
       </ProfileMenuContainer>
     </StyledTopBar>
   );

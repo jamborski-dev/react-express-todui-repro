@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/jamborski-dev/react-express-todui-repro/static/js/main.b63a07e3.chunk.js",
-    "main.js.map": "/jamborski-dev/react-express-todui-repro/static/js/main.b63a07e3.chunk.js.map",
-    "runtime-main.js": "/jamborski-dev/react-express-todui-repro/static/js/runtime-main.f03a6838.js",
-    "runtime-main.js.map": "/jamborski-dev/react-express-todui-repro/static/js/runtime-main.f03a6838.js.map",
-    "static/js/2.bd0deb96.chunk.js": "/jamborski-dev/react-express-todui-repro/static/js/2.bd0deb96.chunk.js",
-    "static/js/2.bd0deb96.chunk.js.map": "/jamborski-dev/react-express-todui-repro/static/js/2.bd0deb96.chunk.js.map",
-    "index.html": "/jamborski-dev/react-express-todui-repro/index.html",
-    "precache-manifest.50513dfd2d5f4f1ff970bd3fecf35a38.js": "/jamborski-dev/react-express-todui-repro/precache-manifest.50513dfd2d5f4f1ff970bd3fecf35a38.js",
-    "service-worker.js": "/jamborski-dev/react-express-todui-repro/service-worker.js",
-    "static/js/2.bd0deb96.chunk.js.LICENSE.txt": "/jamborski-dev/react-express-todui-repro/static/js/2.bd0deb96.chunk.js.LICENSE.txt"
+    "main.js": "/react-express-todui-repro/static/js/main.b63a07e3.chunk.js",
+    "main.js.map": "/react-express-todui-repro/static/js/main.b63a07e3.chunk.js.map",
+    "runtime-main.js": "/react-express-todui-repro/static/js/runtime-main.51409d51.js",
+    "runtime-main.js.map": "/react-express-todui-repro/static/js/runtime-main.51409d51.js.map",
+    "static/js/2.8403e8f4.chunk.js": "/react-express-todui-repro/static/js/2.8403e8f4.chunk.js",
+    "static/js/2.8403e8f4.chunk.js.map": "/react-express-todui-repro/static/js/2.8403e8f4.chunk.js.map",
+    "index.html": "/react-express-todui-repro/index.html",
+    "precache-manifest.e8ddd6b84f264ddb43d7f4953a4b1a55.js": "/react-express-todui-repro/precache-manifest.e8ddd6b84f264ddb43d7f4953a4b1a55.js",
+    "service-worker.js": "/react-express-todui-repro/service-worker.js",
+    "static/js/2.8403e8f4.chunk.js.LICENSE.txt": "/react-express-todui-repro/static/js/2.8403e8f4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f03a6838.js",
-    "static/js/2.bd0deb96.chunk.js",
+    "static/js/runtime-main.51409d51.js",
+    "static/js/2.8403e8f4.chunk.js",
     "static/js/main.b63a07e3.chunk.js"
   ]
 }

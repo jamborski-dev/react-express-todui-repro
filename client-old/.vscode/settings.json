@@ -1,0 +1,5 @@
+{
+  "prettier.semi": true,
+  "explorer.compactFolders": false,
+  "editor.formatOnSave": true,
+}

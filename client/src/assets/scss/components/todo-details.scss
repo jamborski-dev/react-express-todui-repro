@@ -3,7 +3,7 @@
     background: var(--theme-color-background);
     padding: 2rem 1.5rem;
     padding-bottom: 0;
-    padding-right: 4rem;
+    padding-right: 1rem;
     height: 100%;
 
     display: grid;
@@ -35,13 +35,37 @@
     }
   }
 
+  &--header-tools {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: center;
+    align-items: center;
+
+    & svg {
+      --size: 1.2rem;
+      width: var(--size);
+      height: var(--size);
+    }
+  }
+
   &--footer {
     grid-area: footer;
   }
 
-  &--html {
+  &--text-content,
+  &--text-input {
     margin-top: 2rem;
     margin-bottom: 3rem;
+    padding: 0.7rem;
+    margin-left: -0.7rem;
+    font: inherit;
+    border-radius: 7px;
+  }
+  &--text-input {
+    border: none;
+    background: transparent;
+    outline: #b8b8b8 dashed 2px;
   }
 
   &--steps {

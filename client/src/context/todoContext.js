@@ -1,14 +1,18 @@
 import { createContext, useState, useEffect } from "react"
-import { todos as initialData } from "../data/__mock-data"
 import { formatDate } from "../utils/helpers"
-import { RenderCount } from "../components/RenderCount"
+// import { RenderCount } from "../components/RenderCount"
+import { useAppContext } from "../hooks/useAppContext"
 
 export const TodoContext = createContext(null)
 
 export const TodoProvider = ({ children }) => {
+  const {
+    actions: { setEditMode }
+  } = useAppContext()
+
   const [todos, setTodos] = useState([])
+  const [currentTodo, setCurrentTodo] = useState({})
   const [filtered, setFiltered] = useState([])
-  const [currentTodoId, setCurrentTodoId] = useState(null)
   const [currentFilter, setFilter] = useState("")
 
   const fetchTodos = async () => {
@@ -22,11 +26,9 @@ export const TodoProvider = ({ children }) => {
       .catch(err => console.error(err))
   }
 
-  const toggleTodo = id => {
-    setCurrentTodoId(id)
-  }
+  const toggleTodo = id => setCurrentTodo(todos.find(todo => todo._id === id))
 
-  const markImportant = (id = currentTodoId) => {
+  const markImportant = (id = currentTodo._id) => {
     setTodos(todos =>
       todos.map(todo => (todo._id === id ? { ...todo, is_important: !todo.is_important } : todo))
     )
@@ -36,14 +38,13 @@ export const TodoProvider = ({ children }) => {
     )
   }
 
-  const markDone = (id = currentTodoId) => {
+  const markDone = id => {
     setTodos(todos =>
       todos.map(todo => (todo._id === id ? { ...todo, is_done: !todo.is_done } : todo))
     )
-
-    setFiltered(todos =>
-      todos.map(todo => (todo._id === id ? { ...todo, is_done: !todo.is_done } : todo))
-    )
+    if (id === currentTodo._id) {
+      setCurrentTodo(prev => ({ ...prev, is_done: !prev.is_done }))
+    }
   }
 
   const removeTodo = id => {
@@ -54,7 +55,7 @@ export const TodoProvider = ({ children }) => {
       })
       .then(res => {
         console.log(res)
-        setCurrentTodoId(null)
+        setCurrentTodo({})
         fetchTodos()
       })
       .catch(err => {
@@ -145,16 +146,15 @@ export const TodoProvider = ({ children }) => {
   }
 
   const addTodo = () => {
+    const date = new Date()
     const insertData = {
-      title: "test todo " + new Date().getSeconds(),
+      title: `test todo ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
       isDone: false,
       isImportant: false,
       notes: "Lorem bla bla bla bla...",
       reminder: null,
       stepList: []
     }
-
-    console.log(insertData)
 
     fetch("/api/todos", {
       method: "POST",
@@ -166,15 +166,43 @@ export const TodoProvider = ({ children }) => {
     })
       .then(res => {
         console.log(res)
-        if (!res.ok) throw new Error("There was en error")
+        if (!res.ok) throw new Error(`There was en error: ${res.status} / ${res.statusText}`)
         return res.json()
       })
       .then(data => {
         console.log("success insert")
         console.log(data)
-        fetchTodos()
+        console.log(todos)
+        const newList = [...todos, { ...data }]
+        setTodos(newList)
       })
       .catch(err => console.error(err))
+  }
+
+  const saveTodo = () => {
+    const { _id } = currentTodo
+    setTodos(todos => todos.map(item => (item._id === _id ? { ...currentTodo } : item)))
+    fetch(`/api/todos/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(currentTodo)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`There was en error: ${res.status} / ${res.statusText}`)
+        return res.json()
+      })
+      .then(json => {
+        setTodos(todos =>
+          todos.map(item => (item._id === json._id ? { ...item, updatedAt: json.updatedAt } : item))
+        )
+        setEditMode(false)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   useEffect(() => {
@@ -192,18 +220,22 @@ export const TodoProvider = ({ children }) => {
     applyFilter()
   }, [todos])
 
+  useEffect(() => {
+    setEditMode(false)
+  }, [todos.length])
+
   return (
     <TodoContext.Provider
       value={{
         state: {
           todos,
-          currentTodoId,
+          currentTodo,
           filtered,
           currentFilter
         },
         actions: {
           setTodos,
-          setCurrentTodoId,
+          setCurrentTodo,
           toggleTodo,
           markImportant,
           markDone,
@@ -213,7 +245,8 @@ export const TodoProvider = ({ children }) => {
           applyFilter,
           toggleFilter,
           markAllDone,
-          markAllImportant
+          markAllImportant,
+          saveTodo
         }
       }}
     >

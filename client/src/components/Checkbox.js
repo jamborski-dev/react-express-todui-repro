@@ -5,9 +5,11 @@ export const Checkbox = ({ checked, ...props }) => {
     <div className="checkbox-box">
       <input className="checkbox--hidden" type="checkbox" checked={checked} readOnly />
       <div className={`checkbox--custom ${checked ? "checked" : ""}`} checked={checked} {...props}>
-        <span className="checkbox-icon">
-          <Check2 />
-        </span>
+        {checked && (
+          <span className="checkbox-icon">
+            <Check2 />
+          </span>
+        )}
       </div>
     </div>
   )

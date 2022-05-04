@@ -1,5 +1,3 @@
-import { formatDate } from "../utils/helpers"
-
 import {
   Stopwatch,
   ThreeDotsVertical,
@@ -10,66 +8,103 @@ import {
   ArrowRepeat,
   Paperclip,
   Trash,
-  Save
+  Save,
+  PenFill
 } from "react-bootstrap-icons"
+import { BsX } from "react-icons/bs"
+
+import { TodoDetailsDefault } from "./TodoDetailsDefault"
+import { EditableTextField } from "./EditableTextField"
 
 import { Checkbox } from "./Checkbox"
 import { useTodoContext } from "../hooks/useTodoContext"
+import { useAppContext } from "../hooks/useAppContext"
 import { ButtonTool } from "./ButtonTool"
+
+import { formatDate } from "../utils/helpers"
+import { useEffect } from "react"
 
 export const TodoDetails = () => {
   const {
-    state: { todos, currentTodoId },
-    actions: { markImportant, markDone, removeTodo }
+    state: { currentTodo },
+    actions: { markImportant, markDone, removeTodo, saveTodo }
   } = useTodoContext()
-  const [todo] = todos.filter(todo => todo._id === currentTodoId)
+
+  const {
+    state: { editMode },
+    actions: { toggleEditMode }
+  } = useAppContext()
+
+  if (!currentTodo) return null
+
+  const { _id, title, is_done, is_important, notes, reminder, step_list } = currentTodo
 
   return (
-    <section className="todo-details--pane">
-      <Checkbox checked={todo.is_done} onClick={() => markDone()} />
-      <div className="todo-details--body">
-        <header className="todo-details--header">
-          <h1>{todo.title}</h1>
-          <ButtonTool onClick={() => markImportant()}>
-            {todo.is_important ? <StarFill /> : <Star />}
-          </ButtonTool>
-        </header>
-        <div className="todo-meta">
-          <span>
-            <Stopwatch />
-            <p>{formatDate.getDate(todo.reminder)}</p>
-          </span>
-          <span>
-            <Bell />
-            <p>Remind me at {formatDate.getUKTime(todo.reminder)}</p>
-          </span>
-        </div>
-        <div className="todo-details--html" dangerouslySetInnerHTML={{ __html: todo.notes }} />
-        <div className="todo-details--steps">
-          <button className="btn--inline">
-            <Plus /> Add step
-          </button>
-          <ul>
-            {todo.step_list.map(step => (
-              <li key={step.id}>
-                <input type="checkbox" name={step.step_content} />
-                <label htmlFor={step.step_content}>{step.step_content}</label>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <button className="btn--inline">
-          <ArrowRepeat /> Repeat
-        </button>
-      </div>
-      <footer className="todo-details--footer">
-        <ButtonTool onClick={() => removeTodo(todo._id)}>
-          <Trash /> <span>Remove</span>
-        </ButtonTool>
-        <ButtonTool>
-          <Save /> <span>Save</span>
-        </ButtonTool>
-      </footer>
-    </section>
+    <>
+      {currentTodo._id ? (
+        <section className="todo-details--pane">
+          <Checkbox checked={is_done} onClick={() => markDone(_id)} />
+          <div className="todo-details--body">
+            <header className="todo-details--header">
+              <h1>
+                <EditableTextField keyName={"title"} />
+              </h1>
+
+              <div className="todo-details--header-tools">
+                {editMode && (
+                  <ButtonTool onClick={() => saveTodo()}>
+                    <Save />
+                  </ButtonTool>
+                )}
+                <ButtonTool onClick={() => removeTodo(_id)}>
+                  <Trash />
+                </ButtonTool>
+                <ButtonTool onClick={() => toggleEditMode()}>
+                  {!editMode ? <PenFill /> : <BsX />}
+                </ButtonTool>
+                <ButtonTool onClick={() => markImportant()}>
+                  {is_important ? <StarFill /> : <Star />}
+                </ButtonTool>
+              </div>
+            </header>
+            <div className="todo-meta">
+              <span>
+                <Stopwatch />
+                <p>{formatDate.getDate(reminder)}</p>
+              </span>
+              <span>
+                <Bell />
+                <p>Remind me at {formatDate.getUKTime(reminder)}</p>
+              </span>
+            </div>
+            <EditableTextField keyName={"notes"} />
+            {step_list.length !== 0 ||
+              (editMode && (
+                <div className="todo-details--steps">
+                  <button className="btn--inline">
+                    <Plus /> Add step
+                  </button>
+                  <ul>
+                    {step_list.map(step => (
+                      <li key={step.id}>
+                        <input type="checkbox" name={step.step_content} />
+                        <label htmlFor={step.step_content}>{step.step_content}</label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            {editMode && (
+              <button className="btn--inline">
+                <ArrowRepeat /> Repeat
+              </button>
+            )}
+          </div>
+          <footer className="todo-details--footer"></footer>
+        </section>
+      ) : (
+        <TodoDetailsDefault />
+      )}
+    </>
   )
 }

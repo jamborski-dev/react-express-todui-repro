@@ -5,6 +5,7 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { TodoProvider } from "./context/todoContext"
 import { AppProvider } from "./context/appContext"
+import { EditProvider } from "./context/editContext"
 import { RenderCount } from "./components/RenderCount"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
@@ -12,8 +13,10 @@ root.render(
   <React.StrictMode>
     <AppProvider>
       <TodoProvider>
-        <RenderCount message="App" />
-        <App />
+        <EditProvider>
+          <RenderCount message="App" />
+          <App />
+        </EditProvider>
       </TodoProvider>
     </AppProvider>
   </React.StrictMode>

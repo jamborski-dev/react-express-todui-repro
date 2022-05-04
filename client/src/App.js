@@ -7,7 +7,7 @@ import { useTodoContext } from "./hooks/useTodoContext"
 
 const App = () => {
   const {
-    state: { currentTodoId }
+    state: { currentTodo }
   } = useTodoContext()
 
   // TODO: move to context
@@ -17,7 +17,7 @@ const App = () => {
       <Aside />
       <TopBar>topbar</TopBar>
       <TodoList />
-      {currentTodoId ? <TodoDetails /> : <TodoDetailsDefault />}
+      {currentTodo._id ? <TodoDetails /> : <TodoDetailsDefault />}
     </AppGrid>
   )
 }

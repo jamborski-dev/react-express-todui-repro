@@ -9,8 +9,7 @@ import { Checkbox } from "./Checkbox"
 
 export const TodoList = () => {
   const {
-    state: { currentFilter, filtered },
-    actions: { toggleTodo, markDone, markImportant }
+    state: { currentFilter, filtered }
   } = useTodoContext()
 
   return (
@@ -29,38 +28,61 @@ export const TodoList = () => {
         {filtered.length === 0 ? (
           <EmptyList />
         ) : (
-          filtered.map(todo => (
-            <li className="todo-list--item" key={todo._id} onClick={() => toggleTodo(todo._id)}>
-              <Checkbox checked={todo.is_done} onClick={() => markDone(todo._id)} />
-              <div className="todo-list--item-content">
-                <h4>{todo.title}</h4>
-                <div className="todo-meta">
-                  {todo.reminder && (
-                    <span>
-                      <Stopwatch />
-                      <span>{formatDate.getDate(todo.reminder)}</span>
-                    </span>
-                  )}
-                  {todo.attachments && (
-                    <span>
-                      <FileEarmark />
-                    </span>
-                  )}
-                  {todo.reminder && (
-                    <span>
-                      <Bell />
-                    </span>
-                  )}
-                </div>
-              </div>
-              <ButtonTool onClick={() => markImportant(todo.id)}>
-                {todo.is_important ? <StarFill /> : <Star />}
-              </ButtonTool>
-            </li>
-          ))
+          filtered.map(todo => <TodoListItem key={todo._id} todo={todo} />)
         )}
       </ul>
     </section>
+  )
+}
+
+const TodoListItem = ({ todo }) => {
+  const { _id, is_done, is_important, reminder, title, attachments } = { ...todo }
+  const {
+    state: { currentTodo },
+    actions: { toggleTodo, markDone, markImportant }
+  } = useTodoContext()
+
+  const handleMarkImportant = (e, id) => {
+    e.stopPropagation()
+    markImportant(id)
+  }
+
+  const handleMarkDone = (e, id) => {
+    e.stopPropagation()
+    markDone(id)
+  }
+
+  return (
+    <li
+      className={`todo-list--item ${currentTodo._id === _id ? "is-selected" : ""}`}
+      onClick={() => toggleTodo(_id)}
+    >
+      <Checkbox checked={is_done} onClick={e => handleMarkDone(e, _id)} />
+      <div className="todo-list--item-content">
+        <h4>{title}</h4>
+        <div className="todo-meta">
+          {reminder && (
+            <span>
+              <Stopwatch />
+              <span>{formatDate.getDate(reminder)}</span>
+            </span>
+          )}
+          {attachments && (
+            <span>
+              <FileEarmark />
+            </span>
+          )}
+          {reminder && (
+            <span>
+              <Bell />
+            </span>
+          )}
+        </div>
+      </div>
+      <ButtonTool onClick={e => handleMarkImportant(e, _id)}>
+        {is_important ? <StarFill /> : <Star />}
+      </ButtonTool>
+    </li>
   )
 }
 
